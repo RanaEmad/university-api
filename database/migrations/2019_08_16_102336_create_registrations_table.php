@@ -17,6 +17,8 @@ class CreateRegistrationsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('course_id');
+            $table->foreign('student_id')->references('id')->on('student');
+            $table->foreign('course_id')->references('id')->on('course');
             $table->timestamp('registered_on', 0)->nullable();
         });
     }
