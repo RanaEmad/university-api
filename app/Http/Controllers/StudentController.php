@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -35,7 +37,29 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response['result']="fail";
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|string|email|unique:student|max:255',
+            'password' => 'required|string|min:8|max:255',
+        ]);
+
+        if ($validator->fails())
+        {
+            $errors = $validator->errors()->all();
+            $response['errors']=$errors;
+        }
+        else{
+            $student= new Student;
+            $student->name=$request->input("name");
+            $student->email=$request->input("email");
+            $student->password=Hash::make($request->input("password"));
+            $student->save();
+            $response['result']="success";
+        }
+
+        echo json_encode($response);
     }
 
     /**
