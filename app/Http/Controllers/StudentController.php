@@ -38,6 +38,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $response['result']="fail";
+        $status_code=400;
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
@@ -56,10 +57,11 @@ class StudentController extends Controller
             $student->email=$request->input("email");
             $student->password=Hash::make($request->input("password"));
             $student->save();
+            $status_code=201;
             $response['result']="success";
         }
 
-        echo json_encode($response);
+       return response()->json($response,$status_code);
     }
 
     /**
