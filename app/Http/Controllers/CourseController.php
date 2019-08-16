@@ -14,7 +14,17 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses= \DB::table("course")
+        ->select('course.*', \DB::raw('COUNT(registration.student_id) as available'))
+        ->leftJoin('registration', 'course.id', '=', 'registration.course_id')
+        ->groupBy("course.id")
+        ->get();
+
+        foreach($courses as $course){
+            $course->available=$course->available<$course->capacity?"Yes":"No";
+        }
+        
+        return response()->json($courses,200);
     }
 
     /**
