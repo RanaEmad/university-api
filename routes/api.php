@@ -17,7 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->get('/courses', "CourseController@index");
+Route::middleware('auth:api')->get('/courses', function (Request $request) {
+    return json_encode("in");
+});
+
+Route::post('/login', "StudentController@login");
 
 Route::get('login', function(){
     return view('welcome');
