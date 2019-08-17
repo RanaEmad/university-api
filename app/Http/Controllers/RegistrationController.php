@@ -35,7 +35,30 @@ class RegistrationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response['result']="fail";
+        $status_code=400;
+
+        //make sure student is not already enrolled
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required',
+            'course_id' => 'required'
+        ]);
+
+        if ($validator->fails())
+        {
+            $errors = $validator->errors()->all();
+            $response['errors']=$errors;
+        }
+        else{
+            $registration= new Registration;
+            $registration= $request->input("student_id");
+            $registration= $request->input("course_id");
+            $registration->save();
+            $status_code=201;
+            $response['result']="success";
+        }
+
+       return response()->json($response,$status_code);
     }
 
     /**
