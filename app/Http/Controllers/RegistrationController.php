@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
 {
@@ -40,7 +41,6 @@ class RegistrationController extends Controller
 
         //make sure student is not already enrolled
         $validator = Validator::make($request->all(), [
-            'student_id' => 'required',
             'course_id' => 'required'
         ]);
 
@@ -50,12 +50,32 @@ class RegistrationController extends Controller
             $response['errors']=$errors;
         }
         else{
-            $registration= new Registration;
-            $registration= $request->input("student_id");
-            $registration= $request->input("course_id");
-            $registration->save();
-            $status_code=201;
-            $response['result']="success";
+
+            $student= $request->user();
+
+            $course= \DB::table("course")->select('course.*', \DB::raw('COUNT(registration.student_id) as available') )
+                ->where("course.id",$request->input("course_id"))
+                ->leftJoin('registration', 'course.id', '=', 'registration.course_id')
+                ->groupBy("course.id")
+                ->havingRaw("COUNT(registration.student_id) < course.capacity ")->first();
+            
+            if($course){
+                $enrolled= \DB::table("registration")->where("student_id",$student->id)->where("course_id",$request->input("course_id"))->first();
+                if(!$enrolled){
+                    $registration= new Registration;
+                    $registration->student_id= $student->id;
+                    $registration->course_id= $request->input("course_id");
+                    $registration->save();
+                    $status_code=201;
+                    $response['result']="success";
+                }
+                else{
+                    $response['error']="You are already enrolled in this course";
+                }
+            }
+            else{
+                $response['error']="Course doesn't exist or is unavailable";
+            }
         }
 
        return response()->json($response,$status_code);

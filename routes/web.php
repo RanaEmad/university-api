@@ -12,10 +12,5 @@
 */
 
 Route::get('/', function () {
-    echo route("login");die;
     return view('welcome');
 });
-
-Route::post('students', 'StudentController@store');
-
-// Route::get('courses', 'CourseController@index');
