@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StudentTest extends TestCase
 {
-    use RefreshDatabase;
     /**
      * Test create student endpoint
      *
@@ -23,6 +22,8 @@ class StudentTest extends TestCase
             ->assertJson([
                 'result' => "success",
             ]);
+
+        \DB::table("student")->where("email","qweuhuinvefjbvjsbcvjavdfvcsd@create.com")->delete();
     }
 
 
