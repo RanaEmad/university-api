@@ -11,6 +11,8 @@ class CourseTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('course')->delete();
+        
         factory(App\Course::class, 15)->create();
     }
 }
