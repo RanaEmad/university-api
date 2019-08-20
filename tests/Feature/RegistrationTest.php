@@ -10,6 +10,8 @@ use Laravel\Passport\Passport;
 
 class RegistrationTest extends TestCase
 {
+    // use RefreshDatabase;
+    // use DatabaseTransactions;
     /**
      * Test register in course endpoint
      *
@@ -17,18 +19,19 @@ class RegistrationTest extends TestCase
      */
     public function testRegistrationSuccess()
     {
+        \DB::beginTransaction();
+
         Passport::actingAs(
             factory(User::class)->create(),
             ['*']
         );
-        
-        $course= \DB::table("course")->first();
 
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-        ])->json('POST', 'api/registrations', ['course_id' => $course->id]);
+        ])->json('POST', 'api/registrations', ['course_id' => 2]);
 
+        \DB::rollBack();
         $response->assertStatus(201);
     }
 
@@ -59,6 +62,25 @@ class RegistrationTest extends TestCase
             'Accept' => 'application/json',
         ])->json('POST', 'api/registrations', ['course_id' => 1]);
         $response->assertUnauthorized();
+    }
+
+    public function testCourseUnavailable()
+    {
+        Passport::actingAs(
+            factory(User::class)->create(),
+            ['*']
+        );
+
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->json('POST', 'api/registrations', ["course_id"=>1]);
+
+        $response->assertStatus(400)
+        ->assertJsonStructure([
+            "result",
+            "error"
+        ]);
     }
 
 }

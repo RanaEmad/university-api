@@ -16,7 +16,7 @@ class LoginTest extends TestCase
     public function testLoginSuccess()
     {
         $response = $this->json('POST', 'api/login', ["email"=>"test@email.com","password"=>"12345678"]);
-
+        
         $response->assertStatus(200)->assertJsonStructure([
             "result",
             "accessToken"

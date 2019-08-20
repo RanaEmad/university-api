@@ -15,6 +15,8 @@ class StudentTest extends TestCase
      */
     public function testCreateStudentSuccess()
     {
+        \DB::beginTransaction();
+
         $response = $this->json('POST', 'api/students', ['name' => 'testCreateStudent',"email"=>"qweuhuinvefjbvjsbcvjavdfvcsd@create.com","password"=>"12345678"]);
 
         $response
@@ -23,7 +25,8 @@ class StudentTest extends TestCase
                 'result' => "success",
             ]);
 
-        \DB::table("student")->where("email","qweuhuinvefjbvjsbcvjavdfvcsd@create.com")->delete();
+        \DB::rollBack();
+
     }
 
 
