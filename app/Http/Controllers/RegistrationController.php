@@ -39,7 +39,6 @@ class RegistrationController extends Controller
         $response['result']="fail";
         $status_code=400;
 
-        //make sure student is not already enrolled
         $validator = Validator::make($request->all(), [
             'course_id' => 'required'
         ]);
@@ -53,18 +52,17 @@ class RegistrationController extends Controller
 
             $student= $request->user();
 
-            $course= \DB::table("course")->select('course.*', \DB::raw('COUNT(registration.student_id) as available') )
-                ->where("course.id",$request->input("course_id"))
-                ->leftJoin('registration', 'course.id', '=', 'registration.course_id')
-                ->groupBy("course.id")
-                ->havingRaw("COUNT(registration.student_id) < course.capacity ")->first();
+            //make sure course is available for registration
+            $course=\App\Course::available($request->input("course_id"))->first();
             
             if($course){
-                $enrolled= \DB::table("registration")->where("student_id",$student->id)->where("course_id",$request->input("course_id"))->first();
+                //make sure student is not already enrolled
+                $enrolled= Registration::where("student_id",$student->id)->where("course_id",$request->input("course_id"))->first();
                 if(!$enrolled){
                     $registration= new Registration;
                     $registration->student_id= $student->id;
                     $registration->course_id= $request->input("course_id");
+                    $registration->registered_on= date("Y-m-d H:i:s");
                     $registration->save();
                     $status_code=201;
                     $response['result']="success";

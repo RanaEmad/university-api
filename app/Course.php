@@ -15,4 +15,13 @@ class Course extends Model
         ->leftJoin('registration', 'course.id', '=', 'registration.course_id')
         ->groupBy("course.id");
     }
+
+    public function scopeAvailable($query,$course_id)
+    {
+        return  $query->select('course.*', \DB::raw('COUNT(registration.student_id) as available') )
+                ->where("course.id",$course_id)
+                ->leftJoin('registration', 'course.id', '=', 'registration.course_id')
+                ->groupBy("course.id")
+                ->havingRaw("COUNT(registration.student_id) < course.capacity ");
+    }
 }
