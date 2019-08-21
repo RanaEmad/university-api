@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class StudentTest extends TestCase
 {
     /**
-     * Test create student endpoint
+     * Test create student endpoint with success
      *
      * @return void
      */

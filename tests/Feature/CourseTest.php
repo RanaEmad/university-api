@@ -11,7 +11,7 @@ use Laravel\Passport\Passport;
 class CourseTest extends TestCase
 {
     /**
-     * Test get courses endpoint
+     * Test get courses endpoint with success
      *
      * @return void
      */
@@ -35,6 +35,11 @@ class CourseTest extends TestCase
         ->assertJsonCount(15,"courses");
     }
 
+    /**
+     * Test get courses endpoint with failure
+     *
+     * @return void
+     */
     public function testCoursesFail()
     {
         $response = $this->withHeaders([

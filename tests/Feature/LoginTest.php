@@ -24,7 +24,7 @@ class LoginTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test a failed login
      *
      * @return void
      */

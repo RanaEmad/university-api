@@ -10,10 +10,8 @@ use Laravel\Passport\Passport;
 
 class RegistrationTest extends TestCase
 {
-    // use RefreshDatabase;
-    // use DatabaseTransactions;
     /**
-     * Test register in course endpoint
+     * Test successful registration in course endpoint
      *
      * @return void
      */
@@ -35,6 +33,11 @@ class RegistrationTest extends TestCase
         $response->assertStatus(201);
     }
 
+    /**
+     * Test validation failure in course registration endpoint
+     *
+     * @return void
+     */
     public function testRegistrationValidationFail()
     {
         Passport::actingAs(
@@ -55,6 +58,11 @@ class RegistrationTest extends TestCase
         ]);
     }
 
+    /**
+     * Test failed authentication in registration endpoint
+     *
+     * @return void
+     */
     public function testRegistrationAuthFail()
     {
         $response = $this->withHeaders([
@@ -64,6 +72,11 @@ class RegistrationTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    /**
+     * Test unavailable course in registration endpoint
+     *
+     * @return void
+     */
     public function testCourseUnavailable()
     {
         Passport::actingAs(
