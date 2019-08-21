@@ -15,8 +15,10 @@ class CourseController extends Controller
     public function index()
     {
         $courses= Course::withAvailibility()->get();
+        $response["result"]="success";
+        $response["courses"]=$courses;
 
-        return response()->json($courses,200);
+        return response()->json($response,200);
     }
 
     /**

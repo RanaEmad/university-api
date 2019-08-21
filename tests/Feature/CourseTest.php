@@ -28,7 +28,11 @@ class CourseTest extends TestCase
         ])->get('api/courses');
         
         $response->assertStatus(200)
-        ->assertJsonCount(15);
+        ->assertJsonStructure([
+            "result",
+            "courses"
+        ])
+        ->assertJsonCount(15,"courses");
     }
 
     public function testCoursesFail()
