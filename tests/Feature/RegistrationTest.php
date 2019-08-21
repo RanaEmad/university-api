@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
+use App\Student;
 use Laravel\Passport\Passport;
 
 class RegistrationTest extends TestCase
@@ -20,7 +20,7 @@ class RegistrationTest extends TestCase
         \DB::beginTransaction();
 
         Passport::actingAs(
-            factory(User::class)->create(),
+            factory(Student::class)->create(),
             ['*']
         );
 
@@ -41,7 +41,7 @@ class RegistrationTest extends TestCase
     public function testRegistrationValidationFail()
     {
         Passport::actingAs(
-            factory(User::class)->create(),
+            factory(Student::class)->create(),
             ['*']
         );
 
@@ -80,7 +80,7 @@ class RegistrationTest extends TestCase
     public function testCourseUnavailable()
     {
         Passport::actingAs(
-            factory(User::class)->create(),
+            factory(Student::class)->create(),
             ['*']
         );
 

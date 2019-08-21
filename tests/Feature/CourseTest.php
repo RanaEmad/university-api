@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
+use App\Student;
 use Laravel\Passport\Passport;
 
 class CourseTest extends TestCase
@@ -18,7 +18,7 @@ class CourseTest extends TestCase
     public function testCoursesSuccess()
     {
         Passport::actingAs(
-            factory(User::class)->create(),
+            factory(Student::class)->create(),
             ['*']
         );
     
