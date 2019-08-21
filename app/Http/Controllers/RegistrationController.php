@@ -68,6 +68,7 @@ class RegistrationController extends Controller
                     $response['result']="success";
                 }
                 else{
+                    $status_code=409;
                     $response['error']="You are already enrolled in this course";
                 }
             }
