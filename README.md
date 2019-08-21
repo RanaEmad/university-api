@@ -12,13 +12,15 @@ In order to get this application up and running you need to have the following i
 
 # Installation  
 - Clone this repository in your desired folder
+- Run ```composer install``` command to get the project dependencies
+- Run ```npm install``` 
+- Run ```php vendor/bin/homestead make``` for Mac / Linux and ```vendor\\bin\\homestead make``` for Windows to generate Homestead.yaml and the vagrant file
 - Update the Homestead.yaml file located in the root folder with your SSH key path and map your current folder's path correctly
 - Update the .env.example file located in the root folder with your database credentials if different, then rename the file to .env
-- Run ```composer install``` command to get the project dependencies
 - Run ```vagrant up``` command to start the environment
 - Run ```vagrant ssh``` command to connect to the folder on the guest machine
 - Cd into the code folder
-- Run ```php artisan migrate --seed``` command to set the database
+- Run ```php artisan migrate:fresh --seed``` command to set the database
 - Run ```php artisan passport:install ``` command to add clients to the databse
 - Run ```php artisan serve``` command to start the application
 - Use the stated link in the command line as the base URL to call the endpoints mentioned in the Endpoints section
