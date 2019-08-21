@@ -59,6 +59,7 @@ class StudentController extends Controller
             $student->save();
             $status_code=201;
             $response['result']="success";
+            $response['student_id']=$student->id;
         }
 
        return response()->json($response,$status_code);
