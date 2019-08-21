@@ -54,7 +54,7 @@ class RegistrationTest extends TestCase
         $response->assertStatus(400)
         ->assertJsonStructure([
             "result",
-            "errors"
+            "error"
         ]);
     }
 

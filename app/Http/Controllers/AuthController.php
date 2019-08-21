@@ -28,7 +28,7 @@ class AuthController extends Controller
         if ($validator->fails())
         {
             $errors = $validator->errors()->all();
-            $response['errors']=$errors;
+            $response['error']=$errors;
         }
         else{
             $student= User::where("email",$request->input("email"))->first();

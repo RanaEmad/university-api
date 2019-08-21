@@ -30,7 +30,7 @@ class StudentController extends Controller
         if ($validator->fails())
         {
             $errors = $validator->errors()->all();
-            $response['errors']=$errors;
+            $response['error']=$errors;
         }
         else{
             $student= new Student;
