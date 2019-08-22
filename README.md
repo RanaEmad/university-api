@@ -5,7 +5,7 @@ A simple Laravel web service that enables students to create an account, login, 
 In order to get this application up and running you need to have the following installed on your environment:
 - Git
 - Composer
-- Vagrant 2.1.1 or higher
+- Vagrant 2.2.4 or higher
 - Homestead
 - SSH public and private key
 

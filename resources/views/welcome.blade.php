@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="links">
-                This microservice enables students to create an account, login, view courses and register in courses.
+                This web service enables students to create an account, login, view courses and register in courses.
                 You can find out more about how to use the endpoints through the README.md file and the Postman documentation in the following link:<br><a href="https://documenter.getpostman.com/view/8472194/SVfGzCRX">https://documenter.getpostman.com/view/8472194/SVfGzCRX</a>
                 </div>
             </div>
