@@ -1,5 +1,5 @@
 # University API
-A simple Laravel microservice that enables students to register, login, view courses and enroll in courses.
+A simple Laravel web service that enables students to create an account, login, view and register in courses through REST API endpoints
 
 # System Requirements
 In order to get this application up and running you need to have the following installed on your environment:
